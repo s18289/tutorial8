@@ -268,7 +268,7 @@ namespace LinqConsoleApp
         /// </summary>
         public void Task7()
         {
-            
+            var res = Emps.Select(e => new { EmployeeJob = e.Job }).GroupBy(e => new {EmployeeNumber = e.EmployeeJob}).Count(); // CHECK IT
         }
 
         /// <summary>
@@ -277,7 +277,7 @@ namespace LinqConsoleApp
         /// </summary>
         public void Task8()
         {
-            
+            var res = Emps.Any(e => e.Job == "Backend programmer");
         }
 
         /// <summary>
@@ -296,20 +296,30 @@ namespace LinqConsoleApp
         /// </summary>
         public void Task10()
         {
-           
+            var res = Emps.Select(e => new
+            {
+                e.Ename,
+                e.Job,
+                e.HireDate
+            }).Union(Emps.Select(e => new
+            {
+                Ename = "No value",
+                Job = (string)null,
+                HireDate = (DateTime?)null
+            }));
         }
 
         //Find the employee with the highest salary using the Aggregate () method
         public void Task11()
         {
-            
+            var res = Emps.Aggregate((e1, e2) => e1.Salary > e2.Salary ? e1 : e2);
         }
 
         //Using the LINQ language and the SelectMany method, 
         //perform a CROSS JOIN join between collections Emps and Depts
         public void Task12()
         {
-            
+            var res = Emps.SelectMany(dept => Depts, (emp, dept) => new { emp, dept });
         }
     }
 }
